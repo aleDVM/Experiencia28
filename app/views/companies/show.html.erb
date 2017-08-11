@@ -1,0 +1,46 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @company.name %>
+</p>
+
+<%= link_to 'Edit', edit_company_path(@company) %> |
+<%= link_to 'Back', companies_path %>
+
+<%= form_with(model: [@company, @employee]) do |form|%>
+  <%= form.hidden_field :company_id, value: @company.id %>
+  <div class="field">
+    <%= form.label 'nombre' %>
+    <%= form.text_field :first_name, id: :employee_first_name %>
+    <%= form.label 'apellido'%>
+    <%= form.text_field :last_name, id: :employee_last_name %>
+    <%= form.label 'email' %>
+    <%= form.text_field :email, id: :employee_email %>
+    <%= form.label 'area' %>
+    <%= form.select :area_id, Area.pluck(:name, :id) %>
+  </div>
+  <div class="actions">
+    <%= form.submit 'Crear Empleado'%>
+  </div>
+<% end %>
+
+<table class="table">
+  <tr>
+    <td>Nombre</td>
+    <td>Apellido</td>
+    <td>email</td>
+    <td>area</td>
+    <td></td>
+  </tr>
+  <%@company.employees.each do |e|%>
+    <tr>
+      <td><%= e.first_name%></td>
+      <td><%= e.last_name%></td>
+      <td><%= e.email%></td>
+      <td><%=e.area.name%></td>
+      <td> <button type="button" class="btn btn-danger">
+        <%= link_to 'Eliminar', company_employee_path(@company, e), method: :delete, data: { confirm: 'está seguro?' }%></button></td>
+    </tr>
+  <%end%>
+</table>

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Companies</h1>
+
+
+<table class="table">
+  <tr>
+    <td>Empresa</td>
+    <td>cantidad de empleados</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <%@companies.each do |company|%>
+  <tr>
+    <td><%=  link_to company.name, company_path(company) %></td>
+    <td><%=company.employees.count%></td>
+    <td>
+       <button type="button" class="btn btn-warning">
+         <%= link_to 'Edit', edit_company_path(company) %>
+       </button>
+   </td>
+    <td>
+      <button type="button" class="btn btn-danger">
+      <%= link_to 'Destroy', company, method: :delete, data: { confirm: 'Are you sure?' } %>
+    </td>
+  </tr>
+<%end%>
+</table>
+
+<br>
